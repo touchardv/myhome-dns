@@ -1,0 +1,11 @@
+.:53 {
+    log
+    cache
+    hosts {
+        fallthrough
+    }
+    filter {
+        block /etc/coredns/filters/block.list
+    }
+    forward . 8.8.8.8 9.9.9.9
+}
