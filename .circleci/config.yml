@@ -1,0 +1,29 @@
+version: 2.1
+jobs:
+  build:
+    machine:
+      image: ubuntu-2004:202107-02
+    steps:
+      - checkout
+      - run: make build
+      - run: make release-to-quay
+  build-rpi:
+    machine: 
+      image: ubuntu-2004:202107-02
+    steps:
+      - run:
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y qemu-user-static
+            sudo apt-get install -y binfmt-support
+      - checkout
+      - run:
+          no_output_timeout: 30m
+          command: make build TARGET=rpi
+      - run: make release-to-quay TARGET=rpi
+workflows:
+  version: 2
+  full-build:
+    jobs:
+      - build
+      - build-rpi

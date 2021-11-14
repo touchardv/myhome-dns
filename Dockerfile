@@ -1,4 +1,7 @@
-FROM golang:1.17-alpine3.14 AS builder
+ARG BUILDER_IMAGE=golang:1.17-alpine3.14
+ARG RUNTIME_IMAGE=alpine:3.14
+
+FROM $BUILDER_IMAGE AS builder
 
 RUN apk add git make
 
@@ -12,7 +15,7 @@ RUN sed -i '/^acl:acl$/a filter:github.com/milgradesec/filter' plugin.cfg
 
 RUN make
 
-FROM alpine:3.14 as runtime
+FROM $RUNTIME_IMAGE as runtime
 
 COPY --from=builder /go/src/coredns /usr/sbin/coredns
 
