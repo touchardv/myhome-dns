@@ -29,8 +29,7 @@ run:
 		--cap-add NET_ADMIN \
 		--cap-add NET_BROADCAST \
 		--cap-add NET_RAW \
-		--publish 8080:8080 \
-		--name dnsmasq \
+		--name myhome-dns \
 		--publish 1053:53/tcp \
 		--publish 1053:53/udp \
 		$(IMAGE):$(TAG)
