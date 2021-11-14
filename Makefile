@@ -1,14 +1,28 @@
-ARCH ?= $(shell uname -m)
 IMAGE = touchardv/myhome-dns
-TAG = latest
+TARGET ?= default
+
+ifeq ($(TARGET), rpi)
+ PLATFORM = linux/arm/v7
+ BUILD_ARGS = --build-arg BUILDER_IMAGE=arm32v7/golang:1.17-alpine3.14 --build-arg RUNTIME_IMAGE=arm32v7/alpine:3.14
+ TAG = armv7-latest
+else
+ PLATFORM = linux/amd64
+ BUILD_ARGS =
+ TAG = latest
+endif
 
 .PHONY: build
 build:
-	docker build . --tag $(IMAGE):$(TAG)
+	docker buildx build --progress plain --platform $(PLATFORM) . --tag $(IMAGE):$(TAG) $(BUILD_ARGS)
 
 .PHONY: clean
 clean:
 	docker image rm $(IMAGE):$(TAG)
+
+release-to-quay:
+	docker tag $(IMAGE):$(TAG) quay.io/$(IMAGE):$(TAG)
+	docker login -u=$(QUAY_ROBOT_USERNAME) -p=$(QUAY_ROBOT_TOKEN) quay.io
+	docker push quay.io/$(IMAGE):$(TAG)
 
 run:
 	docker run -it --rm \
