@@ -1,5 +1,5 @@
-ARG BUILDER_IMAGE=golang:1.17-alpine3.14
-ARG RUNTIME_IMAGE=alpine:3.14
+ARG BUILDER_IMAGE=golang:1.17-alpine3.15
+ARG RUNTIME_IMAGE=alpine:3.15
 
 FROM $BUILDER_IMAGE AS builder
 
@@ -9,7 +9,7 @@ RUN git clone https://github.com/coredns/coredns src
 
 WORKDIR /go/src
 
-RUN git checkout tags/v1.8.6
+RUN git checkout tags/v1.9.0
 
 RUN sed -i '/^acl:acl$/a filter:github.com/milgradesec/filter' plugin.cfg
 
