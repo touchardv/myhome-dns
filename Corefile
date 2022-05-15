@@ -4,8 +4,6 @@
     hosts {
         fallthrough
     }
-    filter {
-        block /etc/coredns/filters/block.list
-    }
+    filterschedule /etc/coredns/filterschedule/filterschedule.yaml
     forward . 8.8.8.8 9.9.9.9
 }

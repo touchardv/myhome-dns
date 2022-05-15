@@ -3,7 +3,7 @@ TARGET ?= default
 
 ifeq ($(TARGET), rpi)
  PLATFORM = linux/arm/v7
- BUILD_ARGS = --build-arg BUILDER_IMAGE=arm32v7/golang:1.17-alpine3.14 --build-arg RUNTIME_IMAGE=arm32v7/alpine:3.14
+ BUILD_ARGS = --build-arg BUILDER_IMAGE=arm32v7/golang:1.18-alpine3.15 --build-arg RUNTIME_IMAGE=arm32v7/alpine:3.15
  TAG = armv7-latest
 else
  PLATFORM = linux/amd64
@@ -30,6 +30,7 @@ run:
 		--cap-add NET_BROADCAST \
 		--cap-add NET_RAW \
 		--name myhome-dns \
+		-v `pwd`:/etc/coredns/filters/ \
 		--publish 1053:53/tcp \
 		--publish 1053:53/udp \
 		$(IMAGE):$(TAG)

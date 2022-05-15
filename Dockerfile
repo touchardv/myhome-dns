@@ -1,4 +1,4 @@
-ARG BUILDER_IMAGE=golang:1.17-alpine3.15
+ARG BUILDER_IMAGE=golang:1.18-alpine3.15
 ARG RUNTIME_IMAGE=alpine:3.15
 
 FROM $BUILDER_IMAGE AS builder
@@ -9,9 +9,9 @@ RUN git clone https://github.com/coredns/coredns src
 
 WORKDIR /go/src
 
-RUN git checkout tags/v1.9.0
+RUN git checkout tags/v1.9.2
 
-RUN sed -i '/^acl:acl$/a filter:github.com/milgradesec/filter' plugin.cfg
+RUN sed -i '/^acl:acl$/a filterschedule:github.com/touchardv/filterschedule' plugin.cfg
 
 RUN make
 
@@ -19,12 +19,12 @@ FROM $RUNTIME_IMAGE as runtime
 
 COPY --from=builder /go/src/coredns /usr/sbin/coredns
 
-RUN mkdir -p /etc/coredns /etc/coredns/filters
+RUN mkdir -p /etc/coredns /etc/coredns/filterschedule
 
 COPY Corefile /etc/coredns/
-COPY block.list /etc/coredns/filters/
+COPY filterschedule.yaml /etc/coredns/filterschedule/
 
-VOLUME /etc/coredns/filters
+VOLUME /etc/coredns/filterschedule
 
 EXPOSE 53/tcp 53/udp
 

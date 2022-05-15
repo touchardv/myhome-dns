@@ -9,7 +9,7 @@ A simple DNS server, based on [CoreDNS](https://coredns.io/), configured with:
 
 ## Block a site
 
-Edit the `/etc/coredns/filters/block.list` (more details [here](https://github.com/milgradesec/filter)).
+Edit the `/etc/coredns/filterschedule/filterschedule.yaml` (more details [here](https://github.com/touchardv/filterschedule)).
 
 ## Reload the configuration files
 
