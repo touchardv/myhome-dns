@@ -3,7 +3,7 @@ TARGET ?= default
 
 ifeq ($(TARGET), rpi)
  PLATFORM = linux/arm/v7
- BUILD_ARGS = --build-arg BUILDER_IMAGE=arm32v7/golang:1.18-alpine3.15 --build-arg RUNTIME_IMAGE=arm32v7/alpine:3.15
+ BUILD_ARGS = --build-arg BUILDER_IMAGE=arm32v7/golang:1.18-alpine3.16 --build-arg RUNTIME_IMAGE=arm32v7/alpine:3.16
  TAG = armv7-latest
 else
  PLATFORM = linux/amd64
