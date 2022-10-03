@@ -30,7 +30,7 @@ run:
 		--cap-add NET_BROADCAST \
 		--cap-add NET_RAW \
 		--name myhome-dns \
-		-v `pwd`:/etc/coredns/filters/ \
+		-v `pwd`:/etc/coredns/filterschedule/ \
 		--publish 1053:53/tcp \
 		--publish 1053:53/udp \
 		$(IMAGE):$(TAG)
