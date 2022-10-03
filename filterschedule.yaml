@@ -1,10 +1,24 @@
-- sites: ["darkweb"]
+- description: Filter everything
+  filter:
+    everything: true
+  for:
+    all: false
+    hosts:
+      - 192.168.1.100
+  when:
+    always: true
+
+- description: Filter bad web sites
+  filter:
+    sites: ["darkweb"]
   for:
     all: true
   when:
     always: true
 
-- sites: ["discord", "instagram", "twitch", "twich"]
+- description: Filter Discord and co
+  filter:
+    sites: ["discord", "instagram", "twitch", "twich"]
   for:
     all: false
     hosts:

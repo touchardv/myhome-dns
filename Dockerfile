@@ -9,11 +9,11 @@ RUN git clone https://github.com/coredns/coredns src
 
 WORKDIR /go/src
 
-RUN git checkout tags/v1.9.2
+RUN git checkout tags/v1.9.3
 
 RUN sed -i '/^acl:acl$/a filterschedule:github.com/touchardv/filterschedule' plugin.cfg
 
-RUN make
+RUN make gen coredns
 
 FROM $RUNTIME_IMAGE as runtime
 
