@@ -1,10 +1,14 @@
 IMAGE = touchardv/myhome-dns
 TARGET ?= default
 
-ifeq ($(TARGET), rpi)
+ifeq ($(TARGET), rpi-arm7)
  PLATFORM = linux/arm/v7
  BUILD_ARGS = --build-arg BUILDER_IMAGE=arm32v7/golang:1.19-alpine3.18 --build-arg RUNTIME_IMAGE=arm32v7/alpine:3.18
  TAG = armv7-latest
+else ifeq ($(TARGET), rpi-arm64)
+ PLATFORM = linux/arm64/v8
+ BUILD_ARGS =
+ TAG = latest
 else
  PLATFORM = linux/amd64
  BUILD_ARGS =

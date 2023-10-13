@@ -19,8 +19,12 @@ jobs:
       - checkout
       - run:
           no_output_timeout: 30m
-          command: make build TARGET=rpi
-      - run: make release-to-quay TARGET=rpi
+          command: make build TARGET=rpi-arm64
+      - run: make release-to-quay TARGET=rpi-arm64
+      - run:
+          no_output_timeout: 30m
+          command: make build TARGET=rpi-arm7
+      - run: make release-to-quay TARGET=rpi-arm7
 workflows:
   version: 2
   full-build:
