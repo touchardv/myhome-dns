@@ -1,4 +1,4 @@
-ARG BUILDER_IMAGE=golang:1.19-alpine3.18
+ARG BUILDER_IMAGE=golang:1.20-alpine3.18
 ARG RUNTIME_IMAGE=alpine:3.18
 
 FROM $BUILDER_IMAGE AS builder
@@ -9,7 +9,7 @@ RUN git clone https://github.com/coredns/coredns src
 
 WORKDIR /go/src
 
-RUN git checkout tags/v1.9.3
+RUN git checkout tags/v1.11.1
 
 RUN sed -i '/^acl:acl$/a filterschedule:github.com/touchardv/filterschedule' plugin.cfg
 

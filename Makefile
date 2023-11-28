@@ -3,7 +3,7 @@ TARGET ?= default
 
 ifeq ($(TARGET), rpi-arm7)
  PLATFORM = linux/arm/v7
- BUILD_ARGS = --build-arg BUILDER_IMAGE=arm32v7/golang:1.19-alpine3.18 --build-arg RUNTIME_IMAGE=arm32v7/alpine:3.18
+ BUILD_ARGS = --build-arg BUILDER_IMAGE=arm32v7/golang:1.20-alpine3.18 --build-arg RUNTIME_IMAGE=arm32v7/alpine:3.18
  TAG = armv7-latest
 else ifeq ($(TARGET), rpi-arm64)
  PLATFORM = linux/arm64/v8
@@ -17,7 +17,7 @@ endif
 
 .PHONY: build
 build:
-	docker buildx build --progress plain --platform $(PLATFORM) . --tag $(IMAGE):$(TAG) $(BUILD_ARGS)
+	docker buildx build --progress plain --platform $(PLATFORM) . --tag $(IMAGE):$(TAG) $(BUILD_ARGS) --load
 
 .PHONY: clean
 clean:
