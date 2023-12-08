@@ -7,8 +7,8 @@ ifeq ($(TARGET), rpi-arm7)
  TAG = armv7-latest
 else ifeq ($(TARGET), rpi-arm64)
  PLATFORM = linux/arm64/v8
- BUILD_ARGS =
- TAG = latest
+ BUILD_ARGS = --build-arg BUILDER_IMAGE=arm64v8/golang:1.20-alpine3.18 --build-arg RUNTIME_IMAGE=arm64v8/alpine:3.18
+ TAG = arm64-latest
 else
  PLATFORM = linux/amd64
  BUILD_ARGS =
