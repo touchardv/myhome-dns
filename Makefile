@@ -9,6 +9,8 @@ else ifeq ($(TARGET), arm64)
  DOCKER_BUILDX_PLATFORM := linux/arm64/v8
 else ifeq ($(TARGET), amd64)
  DOCKER_BUILDX_PLATFORM := linux/amd64
+else ifeq ($(TARGET), x86_64)
+ DOCKER_BUILDX_PLATFORM := linux/amd64
 endif
 
 build-image:
