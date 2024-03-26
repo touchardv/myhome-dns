@@ -1,7 +1,6 @@
-ARG BUILDER_IMAGE=golang:1.20-alpine3.18
-ARG RUNTIME_IMAGE=alpine:3.18
+ARG ALPINE_VERSION
 
-FROM $BUILDER_IMAGE AS builder
+FROM golang:1.20-alpine${ALPINE_VERSION} AS builder
 
 RUN apk add git make
 
@@ -15,7 +14,7 @@ RUN sed -i '/^acl:acl$/a filterschedule:github.com/touchardv/filterschedule' plu
 
 RUN make gen coredns
 
-FROM $RUNTIME_IMAGE as runtime
+FROM alpine:${ALPINE_VERSION} as runtime
 
 COPY --from=builder /go/src/coredns /usr/sbin/coredns
 

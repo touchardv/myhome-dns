@@ -1,23 +1,23 @@
+ALPINE_VERSION = 3.19
 IMAGE = touchardv/myhome-dns
-TARGET ?= default
+TAG = latest
+TARGET ?= $(shell uname -m)
 
-ifeq ($(TARGET), rpi-arm7)
- PLATFORM = linux/arm/v7
- BUILD_ARGS = --build-arg BUILDER_IMAGE=arm32v7/golang:1.20-alpine3.18 --build-arg RUNTIME_IMAGE=arm32v7/alpine:3.18
- TAG = armv7-latest
-else ifeq ($(TARGET), rpi-arm64)
- PLATFORM = linux/arm64/v8
- BUILD_ARGS = --build-arg BUILDER_IMAGE=arm64v8/golang:1.20-alpine3.18 --build-arg RUNTIME_IMAGE=arm64v8/alpine:3.18
- TAG = arm64-latest
-else
- PLATFORM = linux/amd64
- BUILD_ARGS =
- TAG = latest
+ifeq ($(TARGET), arm)
+ DOCKER_BUILDX_PLATFORM := linux/arm/v7
+else ifeq ($(TARGET), arm64)
+ DOCKER_BUILDX_PLATFORM := linux/arm64/v8
+else ifeq ($(TARGET), amd64)
+ DOCKER_BUILDX_PLATFORM := linux/amd64
+else ifeq ($(TARGET), x86_64)
+ DOCKER_BUILDX_PLATFORM := linux/amd64
 endif
 
-.PHONY: build
-build:
-	docker buildx build --progress plain --platform $(PLATFORM) . --tag $(IMAGE):$(TAG) $(BUILD_ARGS) --load
+build-image:
+	docker buildx build --progress plain \
+	--build-arg ALPINE_VERSION=$(ALPINE_VERSION) \
+	--platform $(DOCKER_BUILDX_PLATFORM) \
+	--tag $(IMAGE):$(TAG) --load -f Dockerfile .
 
 .PHONY: clean
 clean:
@@ -28,7 +28,7 @@ release-to-quay:
 	docker login -u=$(QUAY_ROBOT_USERNAME) -p=$(QUAY_ROBOT_TOKEN) quay.io
 	docker push quay.io/$(IMAGE):$(TAG)
 
-run:
+run-image:
 	docker run -it --rm \
 		--cap-add NET_ADMIN \
 		--cap-add NET_BROADCAST \
