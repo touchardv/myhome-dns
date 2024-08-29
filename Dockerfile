@@ -1,6 +1,6 @@
-ARG ALPINE_VERSION
+ARG ALPINE_VERSION=latest
 
-FROM golang:1.20-alpine${ALPINE_VERSION} AS builder
+FROM golang:1.21-alpine${ALPINE_VERSION} AS builder
 
 RUN apk add git make
 
@@ -8,13 +8,13 @@ RUN git clone https://github.com/coredns/coredns src
 
 WORKDIR /go/src
 
-RUN git checkout tags/v1.11.1
+RUN git checkout tags/v1.11.3
 
 RUN sed -i '/^acl:acl$/a filterschedule:github.com/touchardv/filterschedule' plugin.cfg
 
 RUN make gen coredns
 
-FROM alpine:${ALPINE_VERSION} as runtime
+FROM alpine:${ALPINE_VERSION} AS runtime
 
 COPY --from=builder /go/src/coredns /usr/sbin/coredns
 

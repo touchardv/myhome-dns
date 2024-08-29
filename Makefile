@@ -1,4 +1,4 @@
-ALPINE_VERSION = 3.19
+ALPINE_VERSION = 3.20
 IMAGE = touchardv/myhome-dns
 TAG = latest
 TARGET ?= $(shell uname -m)
