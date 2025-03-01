@@ -1,6 +1,6 @@
 ARG ALPINE_VERSION=latest
 
-FROM golang:1.21-alpine${ALPINE_VERSION} AS builder
+FROM golang:1.22-alpine${ALPINE_VERSION} AS builder
 
 RUN apk add git make
 
@@ -8,7 +8,7 @@ RUN git clone https://github.com/coredns/coredns src
 
 WORKDIR /go/src
 
-RUN git checkout tags/v1.11.3
+RUN git checkout tags/v1.12.0
 
 RUN sed -i '/^acl:acl$/a filterschedule:github.com/touchardv/filterschedule' plugin.cfg
 
