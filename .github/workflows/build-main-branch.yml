@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           build-args: |
-            ALPINE_VERSION=3.20
+            ALPINE_VERSION=3.21
           context: .
           file: Dockerfile
           platforms: linux/amd64,linux/arm64, linux/arm
